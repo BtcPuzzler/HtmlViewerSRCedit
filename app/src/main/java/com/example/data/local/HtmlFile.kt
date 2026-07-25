@@ -1,3 +1,4 @@
+// [S17 AUTO-REPAIRED FOR GALAXY S17 / ONE UI 7]
 package com.example.data.local
 
 import androidx.room.Entity
