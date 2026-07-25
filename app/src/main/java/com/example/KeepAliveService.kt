@@ -24,7 +24,7 @@ class KeepAliveService : Service() {
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         wakeLock = powerManager.newWakeLock(
             PowerManager.PARTIAL_WAKE_LOCK,
-            "${'$'}{packageName}:KeepAliveLock"
+            "${packageName}:KeepAliveLock"
         ).apply {
             // acquire without timeout; be careful to release in onDestroy
             acquire()
