@@ -33,17 +33,15 @@ android {
         keyAlias = "upload"
         keyPassword = System.getenv("KEY_PASSWORD")
       } else {
-        storeFile = file("${rootDir}/debug.keystore")
-        storePassword = "android"
-        keyAlias = "androiddebugkey"
-        keyPassword = "android"
+        // Fallback to debug keystore if a release keystore is not provided
+        val fallbackDebug = file("${rootDir}/debug.keystore")
+        if (fallbackDebug.exists()) {
+          storeFile = fallbackDebug
+          storePassword = "android"
+          keyAlias = "androiddebugkey"
+          keyPassword = "android"
+        }
       }
-    }
-    create("debugConfig") {
-      storeFile = file("${rootDir}/debug.keystore")
-      storePassword = "android"
-      keyAlias = "androiddebugkey"
-      keyPassword = "android"
     }
   }
 
@@ -54,7 +52,8 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
       signingConfig = signingConfigs.getByName("release")
     }
-    debug { signingConfig = signingConfigs.getByName("debugConfig") }
+    // Do not force a custom debug signing config so Gradle can use the default debug key (generated if needed)
+    debug { }
   }
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
