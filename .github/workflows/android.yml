@@ -25,6 +25,15 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
+      # Ensure a debug keystore exists so builds that rely on ${rootDir}/debug.keystore succeed
+      - name: Create debug keystore (if missing)
+        run: |
+          if [ ! -f "${GITHUB_WORKSPACE}/debug.keystore" ]; then
+            keytool -genkeypair -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
+              -keystore "${GITHUB_WORKSPACE}/debug.keystore" -storepass android -keypass android \
+              -dname "CN=Android Debug, O=Android, L=Unknown, ST=Unknown, C=US"
+          fi
+
       - name: Build Debug APK
         run: gradle assembleDebug
 
