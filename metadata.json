@@ -1,0 +1,6 @@
+{
+  "name": "HTML Editor",
+  "description": "Powerhouse offline HTML viewer and code editor with live preview, split screen, and built-in Tailwind CSS support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
